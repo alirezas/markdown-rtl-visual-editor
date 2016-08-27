@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+	<meta charset="UTF-8">
+	<title>Editor</title>
+	<link rel="stylesheet" href="bower_components/pen/src/pen.css">
+	<script src="bower_components/showdown/dist/showdown.js"></script>
+	<script src="bower_components/pen/src/markdown.js"></script>
+	<script src="bower_components/pen/src/pen.js"></script>
+
+	<style>
+		#editor {
+			width: 70%;
+			min-height: 100%;
+			margin: 0 auto;
+			border: 1px solid;
+			direction: rtl;
+			text-align: right;
+			line-height: 2;
+			font-family: Vazir;
+			padding: 30px;
+		}
+		#editor pre {
+			direction: ltr;
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+
+	<button class="to-md">Convert!</button>
+	<div id="editor"></div>
+	<div id="md"></div>
+
+
+	<script>
+		var options = {
+		  editor: document.getElementById('editor'),
+		  class: 'pen', // {String} class of the editor,
+		  debug: true, // {Boolean} false by default
+		  textarea: '<textarea name="content"></textarea>', // fallback for old browsers
+		  list: ['h1', 'h2', 'h3', 'h4', 'pre', 'createlink', 'insertimage', 'code'], // editor menu list
+		  linksInNewWindow: true // open hyperlinks in a new windows/tab
+		}
+		var pen = new Pen(options);
+
+		var converter = new showdown.Converter();
+		converter.setOption('ghCodeBlocks', false);
+
+		var el = document.getElementById('editor');
+		el.addEventListener ("paste", function(e) {
+			e.preventDefault();
+			var input = e.clipboardData.getData('Text');
+			var html = converter.makeHtml(input);
+			e.clipboardData.setData('Text', html);
+			document.execCommand("insertHTML", false, html);
+			console.log(html);
+		}, false);
+
+		document.querySelector('.to-md').addEventListener('click', function() {
+			var md = pen.toMd();
+			document.getElementById('md').innerHTML = md;
+		});
+	</script>
+</body>
+</html>

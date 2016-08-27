@@ -1,0 +1,19 @@
+{
+  "name": "markdown",
+  "version": "0.0.0",
+  "authors": [
+    "Alireza <a.sarabchi@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pen": "~0.2.2",
+    "showdown": "~1.4.3"
+  }
+}
